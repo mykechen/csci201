@@ -57,6 +57,26 @@ All users can view submitted recipes. Features include:
 ## 🛠️ Setup Instructions
 
 1. Clone this repository:
+
    ```bash
    git clone https://github.com/yourusername/trojan-bites.git
    cd trojan-bites
+
+   ```
+
+2. Running the application:
+   Frontend:
+
+```
+cd frontend
+npm run dev
+```
+
+Backend:
+
+```
+cd backend
+./mvnw spring-boot:run
+```
+
+Note: you have to run both frontend and backend simultaneously
