@@ -66,14 +66,14 @@ All users can view submitted recipes. Features include:
 
 2. Running the application:
 
-Frontend:
+   Frontend:
 
 ```
 cd frontend
 npm run dev
 ```
 
-Backend:
+    Backend:
 
 ```
 cd backend
