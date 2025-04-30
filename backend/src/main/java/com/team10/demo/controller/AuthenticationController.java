@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.json.JSONObject;
+import java.sql.Statement;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
