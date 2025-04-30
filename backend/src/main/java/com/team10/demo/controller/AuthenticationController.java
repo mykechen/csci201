@@ -102,16 +102,18 @@ public class AuthenticationController {
             conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword);
             st = conn.createStatement();
 
-            //check for email in database
-            ps = conn.prepareStatement("SELECT * from `User` WHERE user_id = ?");
+            //check for email/password in database
+
+            /*here would be where you hash the password that was input before searching for it*/
+
+            ps = conn.prepareStatement("SELECT * from `User` WHERE user_id = ? AND password = ?");
             ps.setString(1, email);
+            ps.setString(2, password);
             rs = ps.executeQuery();
 
             if (!rs.next()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User and/or password not found");
             }
-
-            //check for correct password
 
             return ResponseEntity.status(HttpStatus.OK).body("User successfully logged in");
 
