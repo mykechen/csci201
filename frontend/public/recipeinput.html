@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Trojan Bites – Recipe Input</title>
+    <script>
+      function submitForm(event) {
+        event.preventDefault();
+
+        // point at your ValidateRecipeInput servlet
+        const url = new URL("ValidateRecipeInput", "http://localhost:8080/");
+
+        const form = document.forms["recipeForm"];
+        const params = {
+          recipeName: form.recipeName.value,
+          description: form.description.value,
+          category: form.category.value,
+          vegan: form.vegan.value,
+          serveMonth: form.serveMonth.value,
+          email: form.email.value,
+          spiceLevel: form.spiceLevel.value,
+        };
+        url.search = new URLSearchParams(params).toString();
+
+        fetch(url)
+          .then((res) => res.json())
+          .then((json) => {
+            document.getElementById("result").innerHTML = `
+            <h2>Submitted Recipe</h2>
+            <table border="1">
+              <tr><th>Field</th><th>Value</th></tr>
+              <tr><td>Recipe Name</td><td>${json.recipeName}</td></tr>
+              <tr><td>Description</td><td>${json.description}</td></tr>
+              <tr><td>Category</td><td>${json.category}</td></tr>
+              <tr><td>Vegan</td><td>${json.vegan}</td></tr>
+              <tr><td>Serve Month</td><td>${json.serveMonth}</td></tr>
+              <tr><td>Email</td><td>${json.email}</td></tr>
+              <tr><td>Spice Level</td><td>${json.spiceLevel}</td></tr>
+            </table>
+          `;
+          })
+          .catch((err) => console.error("Fetch failed:", err));
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Submit your Recipe Recommendation!</h1>
+    <form name="recipeForm" onsubmit="submitForm(event)">
+      <fieldset>
+        <legend>Recipe Details</legend>
+
+        <label>
+          Recipe Name:<br />
+          <input
+            type="text"
+            name="recipeName"
+            placeholder="e.g. Orange Chicken and Rice"
+            required
+          /> </label
+        ><br /><br />
+
+        <label>
+          Description:<br />
+          <textarea
+            name="description"
+            placeholder="e.g. Traditional Chinese dish"
+            required
+          ></textarea></label
+        ><br /><br />
+
+        <label>
+          Category:<br />
+          <select name="category" required>
+            <option value="Appetizer">Appetizer</option>
+            <option value="Main Entree">Main Entree</option>
+            <option value="Dessert">Dessert</option>
+            <option value="Drink">Drink</option>
+            <option value="Side">Side</option>
+          </select> </label
+        ><br /><br />
+
+        <label>
+          Is your dish vegan?&nbsp;
+          <input type="radio" name="vegan" value="Yes" checked /> Yes
+          <input type="radio" name="vegan" value="No" /> No </label
+        ><br /><br />
+
+        <label>
+          Month to Serve:<br />
+          <input type="month" name="serveMonth" required /> </label
+        ><br /><br />
+
+        <label>
+          Your USC Email:<br />
+          <input
+            type="email"
+            name="email"
+            required
+            pattern=".+@usc\.edu"
+            placeholder="you@usc.edu"
+          /> </label
+        ><br /><br />
+
+        <label>
+          Spice Level (1–10):<br />
+          <input type="range" name="spiceLevel" min="1" max="10" /> </label
+        ><br /><br />
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+      </fieldset>
+    </form>
+
+    <div id="result"></div>
+  </body>
+</html>
