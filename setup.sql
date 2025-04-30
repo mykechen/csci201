@@ -10,7 +10,7 @@ CREATE TABLE User (
 
 -- RECIPE table
 CREATE TABLE Recipe (
-    recipe_id INT PRIMARY KEY, --we should auto-increment this
+    recipe_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, --we should auto-increment this
     user_id VARCHAR(20),
     title VARCHAR(100),
     tags TEXT,
