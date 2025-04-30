@@ -1,3 +1,4 @@
+package com.team10.demo.controller;
 public class User {
     private String userEmail;
     private String password;
