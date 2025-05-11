@@ -2,8 +2,8 @@ package com.team10.demo.controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +26,11 @@ public class VoteController {
     @PostMapping("/AddVote")
     public void addVote() {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
+            PreparedStatement ps = conn.prepareStatement("UPDATE recipes (user_email, artist_id) VALUES (?, ?)");
+            PreparedStatement Ts = conn.prepareStatement("INSERT INTO favorites (user_email, artist_id) VALUES (?, ?)");
+            ps.setString(1, email);
+            ps.setString(2, artistId);
+            ps.executeUpdate();
 
         } catch (SQLException e) {
 
@@ -35,6 +40,10 @@ public class VoteController {
     @PostMapping("/RemoveVote")
     public void removeVote() {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO favorites (user_email, artist_id) VALUES (?, ?)");
+            ps.setString(1, email);
+            ps.setString(2, artistId);
+            ps.executeUpdate();
 
         } catch (SQLException e) {
 
@@ -44,6 +53,10 @@ public class VoteController {
     @GetMapping("/GetVotes")
     public void getVotes(@RequestBody String name) {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO favorites (user_email, artist_id) VALUES (?, ?)");
+            ps.setString(1, email);
+            ps.setString(2, artistId);
+            ps.executeUpdate();
           
         } catch (SQLException e) {
 
