@@ -9,6 +9,7 @@ public class Recipe {
     private String description;
     private JSONObject ingredients;
     private String instructions;
+    
     public boolean isValid(){
         if (userID == 0) return false;
         if (Title == null || Title.isEmpty()) return false;
@@ -17,6 +18,16 @@ public class Recipe {
         if (ingredients == null) return false;
         if (instructions == null || instructions.isEmpty()) return false;
         return true;
+    }
+    public String toString() {
+        return "Recipe{" +
+                "userID=" + userID +
+                ", Title='" + Title + '\'' +
+                ", tags='" + tags + '\'' +
+                ", description='" + description + '\'' +
+                ", ingredients=" + ingredients +
+                ", instructions='" + instructions + '\'' +
+                '}';
     }
     public int getUserID() {
         return userID;
