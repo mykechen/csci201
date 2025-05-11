@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +32,7 @@ public class VoteController {
     }
 
     @PostMapping("/AddVote")
-    public void addVote(@RequestBody VoteRequest request) {
+    public ResponseEntity<String> addVote(@RequestBody VoteRequest request) {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
             String UserName = request.getUserId();
             int recipeId = request.getRecipeId();
@@ -40,7 +43,7 @@ public class VoteController {
 
             if(!rs.next()) {
                 // User has already voted
-                return;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("This user has already voted for this recipe.");
             }
 
             PreparedStatement RecipeVoteUpdate = conn.prepareStatement("UPDATE Recipe SET votes = votes + 1; WHERE user_id = ? AND recipe_id = ? VALUES (?, ?)");
@@ -52,13 +55,14 @@ public class VoteController {
             RecipeVoteUpdate.executeUpdate();
             VotingTableUpdate.executeUpdate();
 
+            return ResponseEntity.status(HttpStatus.OK).body("Vote added successfully.");
         } catch (SQLException e) {
-            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error: " + e.getMessage());
         }
     }
 
     @PostMapping("/RemoveVote")
-    public void removeVote(@RequestBody VoteRequest request) {
+    public ResponseEntity<String> removeVote(@RequestBody VoteRequest request) {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
             String UserName = request.getUserId();
             int recipeId = request.getRecipeId();
@@ -92,7 +96,7 @@ public class VoteController {
     }
 
     @GetMapping("/GetVotes")
-    public void getVotes(@RequestBody VoteRequest request) {
+    public ResponseEntity<String>  getVotes(@RequestBody VoteRequest request) {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
             String UserName = request.getUserId();
             int recipeId = request.getRecipeId();
@@ -101,9 +105,9 @@ public class VoteController {
             ps.setInt(2, recipeId);
             ps.executeUpdate();
 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error: " + e.getMessage());
         } catch (SQLException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Database error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error: " + e.getMessage());
         }
     }
 }
