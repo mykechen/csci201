@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +28,7 @@ public class VoteController {
     }
 
     @PostMapping("/AddVote")
-    public void addVote(@RequestBody Recipe request) {
+    public ResponseEntity<String> addVote(@RequestBody Recipe request) {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
             PreparedStatement UserVoteCheck = conn.prepareStatement("SELECT * FROM Voting WHERE user_id = ? AND recipe_id = ? VALUES (?, ?)");
             UserVoteCheck.setString(1, UserName);
@@ -45,6 +48,7 @@ public class VoteController {
             VotingTableUpdate.setInt(2, recipeId);
             RecipeVoteUpdate.executeUpdate();
             VotingTableUpdate.executeUpdate();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Recipe submitted successfully.");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,12 +56,14 @@ public class VoteController {
     }
 
     @PostMapping("/RemoveVote")
-    public void removeVote(String UserName, int recipeId) {
+    public ResponseEntity<String> removeVote(String UserName, int recipeId) {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
             PreparedStatement ps = conn.prepareStatement("INSERT INTO favorites (user_email, artist_id) VALUES (?, ?)");
             ps.setString(1, email);
             ps.setString(2, artistId);
             ps.executeUpdate();
+
+            return ResponseEntity.status(HttpStatus.CREATED).body("Recipe submitted successfully.");
 
         } catch (SQLException e) {
 
@@ -71,6 +77,8 @@ public class VoteController {
             ps.setString(1, email);
             ps.setString(2, artistId);
             ps.executeUpdate();
+
+            
 
         } catch (SQLException e) {
 
