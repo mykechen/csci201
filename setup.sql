@@ -14,6 +14,7 @@ CREATE TABLE Recipe (
     user_id VARCHAR(20),
     title VARCHAR(100),
     tags TEXT,
+    votes INT DEFAULT 0,
     description TEXT,
     ingredients JSON,
     instructions TEXT,
