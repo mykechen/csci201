@@ -6,6 +6,7 @@ public class Recipe {
     private int userID;
     private String Title;
     private String tags;
+    private int votes;
     private String description;
     private JSONObject ingredients;
     private String instructions;
@@ -46,6 +47,12 @@ public class Recipe {
     }
     public void setTags(String tags) {
         this.tags = tags;
+    }
+    public int getVotes() {
+        return votes;
+    }
+    public void setVote(int votes) {
+        this.votes = votes;
     }
     public String getDescription() {
         return description;

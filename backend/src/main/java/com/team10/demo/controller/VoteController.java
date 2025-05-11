@@ -11,9 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/vote")
 public class VoteController {
     private static final String SQLurl = "Our SQL URL"; // Change
     private static final String SQLuser = "Our SQL Username"; // Change
@@ -37,7 +39,7 @@ public class VoteController {
 
             if(!rs.next()) {
                 // User has already voted
-                return;
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Already Voted for this recipe.");
             }
 
             PreparedStatement RecipeVoteUpdate = conn.prepareStatement("UPDATE Recipe SET votes = votes + 1; WHERE user_id = ? AND recipe_id = ? VALUES (?, ?)");
@@ -48,7 +50,7 @@ public class VoteController {
             VotingTableUpdate.setInt(2, recipeId);
             RecipeVoteUpdate.executeUpdate();
             VotingTableUpdate.executeUpdate();
-        return ResponseEntity.status(HttpStatus.CREATED).body("Recipe submitted successfully.");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Recipe vote submitted successfully.");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -63,7 +65,7 @@ public class VoteController {
             ps.setString(2, artistId);
             ps.executeUpdate();
 
-            return ResponseEntity.status(HttpStatus.CREATED).body("Recipe submitted successfully.");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Recipe vote removed successfully.");
 
         } catch (SQLException e) {
 
