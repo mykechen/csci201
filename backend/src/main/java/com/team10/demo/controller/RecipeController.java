@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/recipe")
 @CrossOrigin(origins = "*")
 public class RecipeController {
-    private static final String SQLurl = "jdbc:mysql://localhost/trojanbites"; 
-    private static final String SQLuser = "root";
-    private static final String SQLpassword = "Kapil$2259360427"; // Make sure this matches your actual MySQL password
+    private static final String SQLurl = ""; // Change
+    private static final String SQLuser = ""; // Change
+    private static final String SQLpassword = ""; // Make sure this matches your actual MySQL password
     private static final String SQLDriver = "com.mysql.cj.jdbc.Driver";
 
     // Initialize the driver once at class level
@@ -120,7 +120,7 @@ public class RecipeController {
                 // Now fetch recipes with simplified logic
                 List<Object> simplifiedResult = new ArrayList<>();
                 
-                try (PreparedStatement ps = conn.prepareStatement("SELECT recipe_id, user_id, title, description, ingredients, instructions, tags FROM Recipe");
+                try (PreparedStatement ps = conn.prepareStatement("SELECT recipe_id, user_id, title, description, ingredients, instructions, tags, votes FROM Recipe");
                      ResultSet rs = ps.executeQuery()) {
                     
                     System.out.println("Query executed successfully");
@@ -135,7 +135,7 @@ public class RecipeController {
                         recipe.put("ingredients", rs.getObject("ingredients").toString());
                         recipe.put("steps", rs.getObject("instructions").toString());
                         recipe.put("tags", rs.getObject("tags").toString());
-                        recipe.put("votes", 0);
+                        recipe.put("votes", rs.getInt("votes"));
                         simplifiedResult.add(recipe.toMap());
                     }
                     

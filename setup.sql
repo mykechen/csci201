@@ -1,4 +1,4 @@
-e-- Create schema
+-- Create schema
 CREATE SCHEMA trojanbites;
 USE trojanbites;
 
