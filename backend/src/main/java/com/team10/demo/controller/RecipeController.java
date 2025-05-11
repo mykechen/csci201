@@ -24,6 +24,13 @@ public class RecipeController {
     private static final String SQLDriver = "com.mysql.cj.jdbc.Driver"; // Change if needed
     private static final String domain = "@usc.edu";
 
+    public RecipeController() {
+        try {
+            Class.forName(SQLDriver);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     @PostMapping("/submit")
     public ResponseEntity<String> recipe(@RequestBody Recipe request) {
 
