@@ -1,4 +1,4 @@
-e-- Create schema
+-- Create schema
 CREATE SCHEMA trojanbites;
 USE trojanbites;
 
@@ -10,7 +10,7 @@ CREATE TABLE User (
 
 -- RECIPE table
 CREATE TABLE Recipe (
-    recipe_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, --we should auto-increment this
+    recipe_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_id VARCHAR(20),
     title VARCHAR(100),
     tags TEXT,

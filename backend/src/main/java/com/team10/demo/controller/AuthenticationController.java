@@ -14,12 +14,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 //import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 
-@RestController
-public class AuthenticationController {
+import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    private static final String SQLurl = ""; // Change
-    private static final String SQLuser = ""; // Change
-    private static final String SQLpassword = ""; // Change
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
+public class AuthenticationController {
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
+
+
+    private static final String SQLurl = "jdbc:mysql://localhost:3306/trojanbites?serverTimezone=UTC"; // Change
+    private static final String SQLuser = "root"; // Change
+    private static final String SQLpassword = "jerryzhang123!"; // Change
 
     private static final String domain = "@usc.edu";
 
@@ -29,6 +37,8 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody User request) {
+
+        log.info("got to /signup")
 
         String email = request.getUserEmail();
         String password = request.getUserPass();
