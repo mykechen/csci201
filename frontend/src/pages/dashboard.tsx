@@ -12,6 +12,7 @@ import RecipeCard from "@/components/recipe-card";
 import { mockRecipes } from "@/lib/mock-data";
 import { Recipe } from "@/lib/types";
 import { getAllRecipes } from "@/lib/api";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Trojan Bites",
@@ -95,20 +96,22 @@ export default function Dashboard() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Button
-            variant="outline"
-            className="bg-gray-200 text-black p-2 rounded-lg"
-          >
-            <Plus className="h-6 w-6" />
-          </Button>
+          <Link href="/recipe-input">
+            <Button
+              variant="outline"
+              className="bg-gray-200 text-black p-2 rounded-lg"
+            >
+              <Plus className="h-6 w-6" />
+            </Button>
+          </Link>
         </div>
         {/* Loading state */}
-        {loading && <div className="text-center py-8 text-black">Loading recipes...</div>}
-
+        {loading && (
+          <div className="text-center py-8 text-black">Loading recipes...</div>
+        )}
 
         {/* Error state */}
         {error && <div className="text-center py-8 text-red-500">{error}</div>}
-
 
         {/* Recipe cards */}
         <div className="space-y-4">
