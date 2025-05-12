@@ -12,11 +12,13 @@ import org.json.JSONObject;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/recipe")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RecipeController {
     private static final String SQLurl = ""; // Change
     private static final String SQLuser = ""; // Change
