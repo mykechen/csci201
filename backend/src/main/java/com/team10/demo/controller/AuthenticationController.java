@@ -15,8 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
+import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
+
 
     private static final String SQLurl = ""; // Change
     private static final String SQLuser = ""; // Change
@@ -30,6 +38,8 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody User request) {
+
+        log.info("got to /signup")
 
         String email = request.getUserEmail();
         String password = request.getUserPass();

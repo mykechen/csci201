@@ -14,14 +14,14 @@ INSERT INTO User (user_id, password) VALUES
 
 -- Insert recipes
 INSERT INTO Recipe (recipe_id, user_id, title, tags, description, ingredients, instructions) VALUES
-(1, 'Myke', 'Spicy Ramen', 'spicy,noodles', 'Hot ramen with a kick.', '{"noodles":"200g", "chili":"2 tsp", "egg":"1"}', 'Boil noodles. Add chili. Top with egg.'),
-(2, 'Jerry', 'Avocado Toast', 'vegan,quick', 'Simple avocado toast.', '{"bread":"2 slices", "avocado":"1"}', 'Toast bread. Mash avocado. Spread and serve.'),
-(3, 'Mannat', 'Mango Smoothie', 'drink,fruit', 'Refreshing mango drink.', '{"mango":"1 cup", "yogurt":"1/2 cup", "honey":"1 tsp"}', 'Blend all ingredients.'),
-(4, 'Naysa', 'Garlic Bread', 'snack,bread', 'Crispy garlic-flavored bread.', '{"bread":"1 loaf", "garlic":"3 cloves"}', 'Spread garlic butter and bake.'),
-(5, 'Ai Vy', 'Pho', 'vietnamese,soup', 'Traditional Vietnamese soup.', '{"noodles":"200g", "beef":"100g", "herbs":"mixed"}', 'Simmer broth, add ingredients.'),
-(6, 'Andrew', 'Tacos', 'mexican,dinner', 'Classic beef tacos.', '{"taco_shells":"3", "beef":"150g", "lettuce":"some"}', 'Cook beef, fill shells, add toppings.'),
-(7, 'Elijah', 'Chocolate Cake', 'dessert,baking', 'Rich chocolate cake.', '{"flour":"2 cups", "cocoa":"1/2 cup"}', 'Mix and bake ingredients.'),
-(8, 'Zarif', 'Shakshuka', 'middle-eastern,eggs', 'Poached eggs in tomato sauce.', '{"eggs":"2", "tomato_sauce":"1 cup"}', 'Simmer sauce, crack in eggs.');
+(1, 'Myke', 'Spicy Ramen', '["spicy", "noodles"]', 0, 'Hot ramen with a kick.', '{"noodles":"200g", "chili":"2 tsp", "egg":"1"}', '["Boil noodles.", "Add chili.", "Top with egg."]'),
+(2, 'Jerry', 'Avocado Toast', '["vegan", "quick"]', 0, 'Simple avocado toast.', '{"bread":"2 slices", "avocado":"1"}', '["Toast bread.", "Mash avocado.", "Spread and serve."]'),
+(3, 'Mannat', 'Mango Smoothie', '["drink", "fruit"]', 0, 'Refreshing mango drink.', '{"mango":"1 cup", "yogurt":"1/2 cup", "honey":"1 tsp"}', '["Blend all ingredients."]'),
+(4, 'Naysa', 'Garlic Bread', '["snack", "bread"]', 0, 'Crispy garlic-flavored bread.', '{"bread":"1 loaf", "garlic":"3 cloves"}', '["Spread garlic butter and bake."]'),
+(5, 'Ai Vy', 'Pho', '["vietnamese", "soup"]', 0, 'Traditional Vietnamese soup.', '{"noodles":"200g", "beef":"100g", "herbs":"mixed"}', '["Simmer broth.", "Add ingredients."]'),
+(6, 'Andrew', 'Tacos', '["mexican", "dinner"]', 0, 'Classic beef tacos.', '{"taco_shells":"3", "beef":"150g", "lettuce":"some"}', '["Cook beef.", "Fill shells.", "Add toppings."]'),
+(7, 'Elijah', 'Chocolate Cake', '["dessert", "baking"]', 0, 'Rich chocolate cake.', '{"flour":"2 cups", "cocoa":"1/2 cup"}', '["Mix and bake ingredients."]'),
+(8, 'Zarif', 'Shakshuka', '["middle-eastern", "eggs"]', 0, 'Poached eggs in tomato sauce.', '{"eggs":"2", "tomato_sauce":"1 cup"}', '["Simmer sauce.", "Crack in eggs."]');
 
 -- Insert votes
 INSERT INTO Voting (user_id, recipe_id, timestamp) VALUES

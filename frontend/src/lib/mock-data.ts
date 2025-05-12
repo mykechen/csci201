@@ -3,7 +3,7 @@ import { Recipe } from "./types";
 // Mock data for initial development
 export const mockRecipes: Recipe[] = [
   {
-    id: 1,
+    userId: 1,
     title: "Garlic Butter Lemon Pasta",
     description:
       "A simple yet flavorful pasta dish featuring a rich garlic butter sauce, bright lemon zest, and a hint of spice—a perfect balance of comfort and freshness.",
@@ -30,7 +30,7 @@ export const mockRecipes: Recipe[] = [
     votes: 0,
   },
   {
-    id: 2,
+    userId: 2,
     title: "Simple Avocado Toast",
     description:
       "A quick and nutritious breakfast or snack featuring creamy avocado on crispy toast with customizable toppings.",

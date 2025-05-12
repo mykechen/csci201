@@ -43,18 +43,20 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true);
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
 
-    try {
-      console.log(values);
+    const data = await res.json();
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
+    if (res.ok) {
       router.push("/dashboard");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+    } else {
+      alert(data.message);
     }
   }
 
