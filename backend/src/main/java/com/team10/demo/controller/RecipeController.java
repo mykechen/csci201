@@ -14,13 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/recipe")
 public class RecipeController {
     private static final String SQLurl = ""; // Change
     private static final String SQLuser = ""; // Change
     private static final String SQLpassword = ""; // Change
+
+
     private static final String SQLDriver = "com.mysql.cj.jdbc.Driver"; // Change if needed
     private static final String domain = "@usc.edu";
 
