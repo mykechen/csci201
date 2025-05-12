@@ -1,4 +1,4 @@
-e-- Create schema
+-- Create schema
 CREATE SCHEMA trojanbites;
 USE trojanbites;
 
@@ -10,13 +10,14 @@ CREATE TABLE User (
 
 -- RECIPE table
 CREATE TABLE Recipe (
-    recipe_id INT PRIMARY KEY, --we should auto-increment this
+    recipe_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_id VARCHAR(20),
     title VARCHAR(100),
-    tags TEXT,
+    tags JSON,
+    votes INT DEFAULT 0,
     description TEXT,
     ingredients JSON,
-    instructions TEXT,
+    instructions JSON,
     FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 

@@ -12,10 +12,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-//import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
+import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
+
 
     private static final String SQLurl = ""; // Change
     private static final String SQLuser = ""; // Change
@@ -29,6 +38,8 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody User request) {
+
+        log.info("got to /signup")
 
         String email = request.getUserEmail();
         String password = request.getUserPass();
@@ -57,11 +68,12 @@ public class AuthenticationController {
             }
 
             //else: register user to database + hash password
-            //Pbkdf2PasswordEncoder pwEncoder = new Pbkdf2PasswordEncoder();
+            BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
+            String hashedPassword = hash.encode(password);
 
             ps = conn.prepareStatement("INSERT INTO `User` (user_id, password) VALUES (?, ?)");
             ps.setString(1, email);
-            ps.setString(2, password);
+            ps.setString(2, hashedPassword);
             ps.executeUpdate();
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Successfully registered user");
@@ -106,15 +118,20 @@ public class AuthenticationController {
 
             //check for email/password in database
 
-            /*here would be where you hash the password that was input before searching for it*/
+            BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
 
-            ps = conn.prepareStatement("SELECT * from `User` WHERE user_id = ? AND password = ?");
+            ps = conn.prepareStatement("SELECT * from `User` WHERE user_id = ?");
             ps.setString(1, email);
-            ps.setString(2, password);
             rs = ps.executeQuery();
 
             if (!rs.next()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User and/or password not found");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+            }
+
+            String dbPass = rs.getString("password");
+
+            if (!hash.matches(password, dbPass)) { 
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password does not match."); 
             }
 
             return ResponseEntity.status(HttpStatus.OK).body("User successfully logged in");
