@@ -15,15 +15,19 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/recipe")
 @CrossOrigin(origins = "*")
 public class RecipeController {
     private static final String SQLurl = ""; // Change
     private static final String SQLuser = ""; // Change
+
     private static final String SQLpassword = ""; // Make sure this matches your actual MySQL password
     private static final String SQLDriver = "com.mysql.cj.jdbc.Driver";
 
@@ -43,6 +47,7 @@ public class RecipeController {
     public ResponseEntity<String> testEndpoint() {
         return ResponseEntity.ok("API is working");
     }
+
 
     // Add a DB test endpoint to verify database connectivity
     @GetMapping("/dbtest")
