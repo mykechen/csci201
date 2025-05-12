@@ -26,9 +26,9 @@ public class AuthenticationController {
     private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
 
-    private static final String SQLurl = "jdbc:mysql://localhost:3306/trojanbites?serverTimezone=UTC"; // Change
-    private static final String SQLuser = "root"; // Change
-    private static final String SQLpassword = "jerryzhang123!"; // Change
+    private static final String SQLurl = ""; // Change
+    private static final String SQLuser = ""; // Change
+    private static final String SQLpassword = ""; // Change
 
     private static final String domain = "@usc.edu";
 
