@@ -67,13 +67,11 @@ public class AuthenticationController {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("User with this email address already exists.");
             }
 
-            //else: register user to database + hash password
-            BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
-            String hashedPassword = hash.encode(password);
+            //else: register user to database
 
             ps = conn.prepareStatement("INSERT INTO `User` (user_id, password) VALUES (?, ?)");
             ps.setString(1, email);
-            ps.setString(2, hashedPassword);
+            ps.setString(2, password);
             ps.executeUpdate();
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Successfully registered user");
@@ -118,21 +116,11 @@ public class AuthenticationController {
 
             //check for email/password in database
 
-            BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
-
-            ps = conn.prepareStatement("SELECT * from `User` WHERE user_id = ?");
+            ps = conn.prepareStatement("SELECT * from `User` WHERE user_id = ? AND password = ?");
             ps.setString(1, email);
+            ps.setString(2, password);
+
             rs = ps.executeQuery();
-
-            if (!rs.next()) {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
-            }
-
-            String dbPass = rs.getString("password");
-
-            if (!hash.matches(password, dbPass)) { 
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password does not match."); 
-            }
 
             return ResponseEntity.status(HttpStatus.OK).body("User successfully logged in");
 
