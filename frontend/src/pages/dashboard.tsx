@@ -6,12 +6,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Plus, ChevronDown } from "lucide-react";
+import { Plus, ChevronDown, Link } from "lucide-react";
 import type { Metadata } from "next";
 import RecipeCard from "@/components/recipe-card";
 import { mockRecipes } from "@/lib/mock-data";
 import { Recipe } from "@/lib/types";
 import { getAllRecipes } from "@/lib/api";
+import router from "next/router";
 
 export const metadata: Metadata = {
   title: "Trojan Bites",
@@ -48,6 +49,7 @@ export default function Dashboard() {
     fetchRecipes();
   }, []);
 
+
   // Filter recipes based on feed option
   const filteredRecipes = () => {
     switch (feedOption) {
@@ -62,6 +64,10 @@ export default function Dashboard() {
         // Assuming newer recipes have higher IDs
         return [...recipes].sort((a, b) => (b.id || 0) - (a.id || 0));
     }
+  };
+
+  const handleNavigateToRecipeInput = () => {
+    router.push("/recipe-input");
   };
 
   return (
@@ -98,17 +104,18 @@ export default function Dashboard() {
           <Button
             variant="outline"
             className="bg-gray-200 text-black p-2 rounded-lg"
+            onClick={handleNavigateToRecipeInput}
           >
             <Plus className="h-6 w-6" />
           </Button>
         </div>
         {/* Loading state */}
-        {loading && <div className="text-center py-8 text-black">Loading recipes...</div>}
-
+        {loading && (
+          <div className="text-center py-8 text-black">Loading recipes...</div>
+        )}
 
         {/* Error state */}
         {error && <div className="text-center py-8 text-red-500">{error}</div>}
-
 
         {/* Recipe cards */}
         <div className="space-y-4">

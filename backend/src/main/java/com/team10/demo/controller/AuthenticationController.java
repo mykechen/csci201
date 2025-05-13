@@ -1,19 +1,28 @@
 package com.team10.demo.controller;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
 
-    private static final String SQLurl = "";
-    private static final String SQLuser = "";
-    private static final String SQLpassword = "";
+    private static final String SQLurl = "jdbc:mysql://localhost/trojanbites"; // Change
+    private static final String SQLuser = "root"; // Change
+    private static final String SQLpassword = "Kapil$2259360427"; // Change
+
     private static final String domain = "@usc.edu";
 
     public static class User {

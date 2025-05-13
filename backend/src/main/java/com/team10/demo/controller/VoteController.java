@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/vote")
 public class VoteController {
-    private static final String SQLurl = ""; // Change
-    private static final String SQLuser = ""; // Change
-    private static final String SQLpassword = ""; // Change
+    private static final String SQLurl = "jdbc:mysql://localhost/trojanbites"; // Change
+    private static final String SQLuser = "root"; // Change
+    private static final String SQLpassword = "Kapil$2259360427"; // Change
 
     public VoteController() {
         try {
