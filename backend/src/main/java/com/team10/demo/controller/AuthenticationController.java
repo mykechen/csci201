@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
 
-    private static final String SQLurl = "jdbc:mysql://localhost/trojanbites"; // Change
-    private static final String SQLuser = "root"; // Change
-    private static final String SQLpassword = "Kapil$2259360427"; // Change
+    private static final String SQLurl = ""; // Change
+    private static final String SQLuser = ""; // Change
+    private static final String SQLpassword = ""; // Change
 
     private static final String domain = "@usc.edu";
 
@@ -48,6 +48,7 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody User request) {
+
         String email = request.getUserEmail();
         String password = request.getUserPass();
 

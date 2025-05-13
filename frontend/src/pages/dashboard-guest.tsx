@@ -50,15 +50,18 @@ export default function Dashboard() {
   }, []);
 
 
+  // Filter recipes based on feed option
   const filteredRecipes = () => {
     switch (feedOption) {
       case "Popular":
         return [...recipes].sort((a, b) => b.votes - a.votes);
       case "My Recipes":
+        // Replace with actual user ID when authentication is implemented
         const currentUserId = 1; // Placeholder
         return recipes.filter((recipe) => recipe.userId === currentUserId);
       case "Latest":
       default:
+        // Assuming newer recipes have higher IDs
         return [...recipes].sort((a, b) => (b.id || 0) - (a.id || 0));
     }
   };
@@ -101,7 +104,6 @@ export default function Dashboard() {
             <Button
               variant="outline"
               className="bg-gray-200 text-black p-2 rounded-lg"
-              onClick={handleNavigateToRecipeInput}
             >
               <Plus className="h-6 w-6" />
             </Button>
@@ -113,10 +115,12 @@ export default function Dashboard() {
             </div>
           )}
 
+          {/* Error state */}
           {error && (
             <div className="text-center py-8 text-red-500">{error}</div>
           )}
 
+          {/* Recipe cards */}
           <div className="space-y-4">
             {filteredRecipes().map((recipe) => (
               <RecipeCard key={recipe.id} recipe={recipe} />

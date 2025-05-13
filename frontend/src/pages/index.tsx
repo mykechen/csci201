@@ -22,7 +22,7 @@ export default function Home() {
             </Button>
           </Link>
 
-          <Link href="/dashboard" className="w-full">
+          <Link href="/dashboard-guest" className="w-full">
             <Button className="w-full text-black" variant="ghost">
               Continue as Guest
             </Button>
