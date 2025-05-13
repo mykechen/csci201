@@ -2,7 +2,23 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/router";
 
-const dietaryOptions = ["Vegan", "Halal", "Gluten-Free", "Nut-Free"];
+const dietaryOptions = [
+  "Dairy",
+  "Peanuts",
+  "Shellfish",
+  "Eggs",
+  "Pork",
+  "Soy",
+  "Fish",
+  "Sesame",
+  "Tree Nuts",
+  "Vegan",
+  "Vegetarian",
+  "Gluten",
+  "Halal",
+  "Gluten-Free",
+  "Nut-Free",
+];
 
 export default function SubmitRecipePage() {
   const [formData, setFormData] = useState({
