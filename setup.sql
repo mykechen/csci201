@@ -1,14 +1,13 @@
--- Create schema
+
 CREATE SCHEMA trojanbites;
 USE trojanbites;
 
--- USER table
+
 CREATE TABLE User (
     user_id VARCHAR(20) PRIMARY KEY,
     password VARCHAR(40)
 );
 
--- RECIPE table
 CREATE TABLE Recipe (
     recipe_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     user_id VARCHAR(20),
@@ -21,7 +20,7 @@ CREATE TABLE Recipe (
     FOREIGN KEY (user_id) REFERENCES User(user_id)
 );
 
--- VOTING table
+
 CREATE TABLE Voting (
     user_id VARCHAR(20),
     recipe_id INT,
