@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 public class Recipe {
     private int id;
-    private String userID; // Changed from int to String to match database schema
+    private String userID; 
     private String title;
     private JSONObject tags;
     private int votes;
@@ -13,11 +13,9 @@ public class Recipe {
     private JSONObject instructions;
   
 
-    // Constructors
     public Recipe() {
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -27,11 +25,11 @@ public class Recipe {
     }
     
 
-    public String getUserID() { // Changed return type from int to String
+    public String getUserID() { 
         return userID;
     }
 
-    public void setUserID(String userID) { // Changed parameter type from int to String
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -83,7 +81,6 @@ public class Recipe {
         this.votes = votes;
     }
 
-    // Updated validation method to check for valid userID string
     public boolean isValid() {
         return userID != null && !userID.isEmpty() && title != null && !title.isEmpty() && 
                tags != null && description != null && 
@@ -94,7 +91,7 @@ public class Recipe {
     public String toString() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", id);
-        jsonObject.put("userId", userID); // Now correctly stores string userId
+        jsonObject.put("userId", userID);
         jsonObject.put("title", title);
         jsonObject.put("tags", tags);
         jsonObject.put("description", description);
@@ -104,14 +101,13 @@ public class Recipe {
         return jsonObject.toString();
     }
 
-    // Response class for frontend - Updated to handle String userID
     public RecipeResponse toResponse() {
         RecipeResponse response = new RecipeResponse();
         response.id = this.id;
-        response.userId = this.userID; // Now correctly assigns string userId
+        response.userId = this.userID;
         response.title = this.title;
         
-        // Extract tags array from JSONObject
+
         if (this.tags != null && this.tags.has("tags")) {
             response.tags = new String[this.tags.getJSONArray("tags").length()];
             for (int i = 0; i < this.tags.getJSONArray("tags").length(); i++) {
@@ -121,7 +117,6 @@ public class Recipe {
         
         response.description = this.description;
         
-        // Extract ingredients array from JSONObject
         if (this.ingredients != null && this.ingredients.has("ingredients")) {
             response.ingredients = new String[this.ingredients.getJSONArray("ingredients").length()];
             for (int i = 0; i < this.ingredients.getJSONArray("ingredients").length(); i++) {
@@ -129,7 +124,6 @@ public class Recipe {
             }
         }
         
-        // Extract steps array from JSONObject
         if (this.instructions != null && this.instructions.has("steps")) {
             response.steps = new String[this.instructions.getJSONArray("steps").length()];
             for (int i = 0; i < this.instructions.getJSONArray("steps").length(); i++) {
@@ -143,7 +137,7 @@ public class Recipe {
 
     public static class RecipeResponse {
         public int id;
-        public String userId; // Changed from int to String to match database schema
+        public String userId;
         public String title;
         public String[] tags;
         public String description;

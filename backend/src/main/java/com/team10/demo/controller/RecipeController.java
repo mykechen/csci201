@@ -39,13 +39,11 @@ public class RecipeController {
         }
     }
 
-    // Add a simple test endpoint to verify basic connectivity
     @GetMapping("/test")
     public ResponseEntity<String> testEndpoint() {
         return ResponseEntity.ok("API is working");
     }
 
-    // Add a DB test endpoint to verify database connectivity
     @GetMapping("/dbtest")
     public ResponseEntity<String> testDatabaseConnection() {
         try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
@@ -65,23 +63,19 @@ public class RecipeController {
         }
     }
     
-    // Update submit method to accept Map and handle conversion properly
     @PostMapping("/submit")
     public ResponseEntity<String> recipe(@RequestBody Map<String, Object> requestBody) {
         System.out.println("Raw request body: " + requestBody);
         
         try {
-            // Extract userID directly from the map
             String userID = (String) requestBody.get("userID");
             System.out.println("Extracted userID: " + userID);
-            
-            // Create Recipe object manually from the map
+
             Recipe recipe = new Recipe();
             recipe.setUserID(userID);
             recipe.setTitle((String) requestBody.get("title"));
             recipe.setDescription((String) requestBody.get("description"));
             
-            // Handle tags - convert List to JSONObject with "tags" key (if needed for compatibility)
             if (requestBody.get("tags") instanceof List) {
                 List<String> tagsList = (List<String>) requestBody.get("tags");
                 JSONObject tagsObj = new JSONObject();
@@ -89,14 +83,12 @@ public class RecipeController {
                 recipe.setTags(tagsObj);
             }
             
-            // Handle ingredients - convert Map to JSONObject
             if (requestBody.get("ingredients") instanceof Map) {
                 Map<String, Object> ingredientsMap = (Map<String, Object>) requestBody.get("ingredients");
                 JSONObject ingredientsObj = new JSONObject(ingredientsMap);
                 recipe.setIngredients(ingredientsObj);
             }
             
-            // Handle instructions - convert Map to JSONObject
             if (requestBody.get("instructions") instanceof Map) {
                 Map<String, Object> instructionsMap = (Map<String, Object>) requestBody.get("instructions");
                 JSONObject instructionsObj = new JSONObject(instructionsMap);
@@ -109,7 +101,6 @@ public class RecipeController {
             System.out.println("Created recipe - ingredients: " + recipe.getIngredients());
             System.out.println("Created recipe - instructions: " + recipe.getInstructions());
             
-            // Check validation
             if (!recipe.isValid()) {
                 System.out.println("Recipe validation failed!");
                 System.out.println("userID null/empty: " + (recipe.getUserID() == null || recipe.getUserID().isEmpty()));
@@ -148,17 +139,14 @@ public class RecipeController {
         }
     }
 
-    // Keep the rest of your methods unchanged
     @GetMapping("/all")
     public ResponseEntity<?> getAllRecipes() {
         System.out.println("Fetching all recipes - starting debug version");
         
         try {
-            // First just test connection
             try (Connection conn = DriverManager.getConnection(SQLurl, SQLuser, SQLpassword)) {
                 System.out.println("Database connection established");
-                
-                // Try simple query to verify table exists
+
                 try (PreparedStatement checkTable = conn.prepareStatement("SHOW TABLES LIKE 'Recipe'");
                      ResultSet tableResult = checkTable.executeQuery()) {
                     
@@ -171,7 +159,6 @@ public class RecipeController {
                     System.out.println("Recipe table exists, now querying data");
                 }
                 
-                // Now fetch recipes with simplified logic
                 List<Object> simplifiedResult = new ArrayList<>();
                 
                 try (PreparedStatement ps = conn.prepareStatement("SELECT recipe_id, user_id, title, description, ingredients, instructions, tags, votes FROM Recipe");
@@ -181,7 +168,6 @@ public class RecipeController {
                     
                     while (rs.next()) {
                         System.out.println("Found recipe: " + rs.getString("title"));
-                        // Just create a simplified object with id and title for debugging
                         JSONObject recipe = new JSONObject();
                         recipe.put("userId", rs.getString("user_id")); // Changed to getString for email
                         recipe.put("title", rs.getString("title"));
@@ -222,12 +208,9 @@ public class RecipeController {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Recipe recipe = new Recipe();
-                    // recipe.setId(rs.getInt("recipe_id"));
-                    // Changed from getInt to getString for user_id
                     recipe.setUserID(rs.getString("user_id"));
                     recipe.setTitle(rs.getString("title"));
                     
-                    // Safely parse JSON strings
                     String tagsStr = rs.getString("tags");
                     if (tagsStr != null && !tagsStr.isEmpty()) {
                         recipe.setTags(new JSONObject(tagsStr));
@@ -245,14 +228,13 @@ public class RecipeController {
                         recipe.setInstructions(new JSONObject(instructionsStr));
                     }
                     
-                    // Convert to response format
                     return ResponseEntity.ok(recipe.toResponse());
                 } else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found.");
                 }
             }
         } catch (SQLException sqle) {
-            sqle.printStackTrace(); // Log the error for debugging
+            sqle.printStackTrace(); 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Database error: " + sqle.getMessage());
         }
@@ -274,7 +256,7 @@ public class RecipeController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found.");
             }
         } catch (SQLException sqle) {
-            sqle.printStackTrace(); // Log the error for debugging
+            sqle.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Database error: " + sqle.getMessage());
         }
